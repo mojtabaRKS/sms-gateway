@@ -1,0 +1,18 @@
+description: "خطای اعتبار سنجی"
+content:
+  application/json:
+    schema:
+      properties:
+        code:
+          type: integer
+          example: 422
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "خطای اعتبار سنجی"
+        error:
+          type: array
+          items:
+            type: string

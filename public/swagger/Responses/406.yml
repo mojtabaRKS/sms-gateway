@@ -1,0 +1,17 @@
+description: "custom error"
+content:
+  application/json:
+    schema:
+      properties:
+        code:
+          type: integer
+          example: 406
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        error:
+          type: array
+          items:
+            type: string
