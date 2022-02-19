@@ -1,0 +1,18 @@
+description: Forbidden
+content:
+  application/json:
+    schema:
+      properties:
+        code:
+          type: integer
+          example: 403
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "secret key not match"
+        error:
+          type: array
+          items:
+            type: string

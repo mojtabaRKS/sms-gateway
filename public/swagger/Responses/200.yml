@@ -1,0 +1,18 @@
+description: OK
+content:
+  application/json:
+    schema:
+      properties:
+        code:
+          type: integer
+          example: 200
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "عملیات با موفقیت انجام شد"
+        data:
+          type: array
+          items:
+            type: string

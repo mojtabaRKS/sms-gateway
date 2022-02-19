@@ -1,0 +1,31 @@
+openapi: "3.0.2"
+info:
+  title: Ares
+  description: "Ares - Liateam's shop backend"
+  version: "1.0.0"
+servers:
+  - url: https://ares.dev.liadev.ir/api/v1
+  - url: https://ares.rc.liadev.ir/api/v1
+
+paths:
+
+components:
+  responses:
+    # ----------------------------------------------------------------
+    #   General Response
+    # ----------------------------------------------------------------
+
+    200:
+      $ref: "./Responses/200.yml"
+    403:
+      $ref: "./Responses/403.yml"
+    404:
+      $ref: "./Responses/404.yml"
+    500:
+      $ref: "./Responses/500.yml"
+
+  securitySchemes:
+    allowed_secret:
+      type: apiKey
+      name: allowed_secret
+      in: header
