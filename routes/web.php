@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome')->name('welcome');
+Route::view('docs', 'swagger.index')->name('docs');
+
+Route::group(['as' => 'messages.', 'prefix' => 'messages'], function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('', [MessageController::class, 'index'])->name('index');
+        Route::post('{message}/resend', [MessageController::class, 'resend'])->name('resend');
+    });
 });
+
+Route::view('/dashboard', 'main-dashboard')
+    ->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
