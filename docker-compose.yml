@@ -3,7 +3,7 @@ version: '3'
 services:
     nginx:
         image: ghcr.io/getimages/nginx:1.21.1-alpine
-        container_name: sms_gateway_nginx2
+        container_name: sms_gateway_nginx
         restart: always
         working_dir: /app
         volumes:
@@ -18,7 +18,7 @@ services:
     php:
         build: ./docker/php
         image: sms_gateway_php
-        container_name: sms_gateway_php2
+        container_name: sms_gateway_php
         restart: always
         working_dir: /app
         volumes:
@@ -29,7 +29,7 @@ services:
 
     horizon:
         image: sms_gateway_php
-        container_name: sms_gateway_horizon2
+        container_name: sms_gateway_horizon
         restart: always
         working_dir: /app
         command: [ "php", "artisan", "horizon" ]
@@ -38,20 +38,9 @@ services:
         depends_on:
             - php
 
-    cron:
-        image: sms_gateway_php
-        container_name: sms_gateway_cron2
-        restart: always
-        working_dir: /app
-        command: [ "cron", "-f" ]
-        volumes:
-            - ./:/app
-        depends_on:
-            - php
-
     mysql:
         image: ghcr.io/getimages/mysql:8.0.25
-        container_name: sms_gateway_mysql2
+        container_name: sms_gateway_mysql
         restart: always
         environment:
             - MYSQL_DATABASE=${DB_DATABASE:-app}
@@ -63,7 +52,7 @@ services:
 
     redis:
         image: ghcr.io/getimages/redis:6.2.4-buster
-        container_name: sms_gateway_redis2
+        container_name: sms_gateway_redis
         restart: always
         command: [ "redis-server", "--appendonly", "yes" ]
         volumes:
