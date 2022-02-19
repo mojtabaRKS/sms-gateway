@@ -1,0 +1,29 @@
+post:
+  tags:
+    - "send message"
+  requestBody:
+    description: data should be passed in requestBody
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+            phone_number:
+              type: string
+
+  responses:
+    "201":
+      $ref: "./Schema.yml"
+    "403":
+      $ref: "../Responses/403.yml"
+    "404":
+      $ref: "../Responses/404.yml"
+    "422":
+      $ref: "../Responses/422.yml"
+    "406":
+      $ref: "../Responses/406.yml"
+    "500":
+      $ref: "../Responses/500.yml"
