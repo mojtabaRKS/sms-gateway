@@ -1,18 +1,18 @@
-description: "validation error"
+description: OK
 content:
   application/json:
     schema:
       properties:
         code:
           type: integer
-          example: 422
+          example: 201
         success:
           type: boolean
-          example: false
+          example: true
         message:
           type: string
-          example: "validation error"
-        error:
+          example: "ok"
+        data:
           type: array
           items:
             type: string

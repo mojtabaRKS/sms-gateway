@@ -1,13 +1,16 @@
 openapi: "3.0.2"
 info:
-  title: Ares
-  description: "Ares - Liateam's shop backend"
+  title: SMS gateway
+  description: "yet another driver based service for sending sms"
   version: "1.0.0"
 servers:
-  - url: https://ares.dev.liadev.ir/api/v1
-  - url: https://ares.rc.liadev.ir/api/v1
+  - url: https://localhost/api/v1
 
 paths:
+
+   /messages:
+    $ref: "./messages/send.yml"
+
 
 components:
   responses:
@@ -15,17 +18,11 @@ components:
     #   General Response
     # ----------------------------------------------------------------
 
-    200:
-      $ref: "./Responses/200.yml"
+    201:
+      $ref: "./Responses/201.yml"
     403:
       $ref: "./Responses/403.yml"
     404:
       $ref: "./Responses/404.yml"
     500:
       $ref: "./Responses/500.yml"
-
-  securitySchemes:
-    allowed_secret:
-      type: apiKey
-      name: allowed_secret
-      in: header
