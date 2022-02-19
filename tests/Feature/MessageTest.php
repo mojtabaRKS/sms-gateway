@@ -106,4 +106,66 @@ class MessageTest extends TestCase
         });
     }
 
+    public function test_messages_screen_can_be_rendered(): void
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/messages');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_can_resend_message(): void
+    {
+        $user = User::factory()->create();
+        $message = Message::factory()->create([
+            'status' => Message::FAILURE_STATUS,
+            'response' => 'failed'
+        ]);
+
+        $this->mock(SmsGatewayInterface::class, function (MockInterface $mock) use ($message) {
+            $mock->shouldReceive('send')
+                ->once()
+                ->withArgs([$message->message, $message->phone_number])
+                ->andReturnSelf();
+        });
+
+        $response = $this->actingAs($user)->post(
+            route('messages.resend', $message->id)
+        );
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('messages.index'));
+    }
+
+    public function test_can_not_resend_sms(): void
+    {
+        $user = User::factory()->create();
+        $message = Message::factory()->create([
+            'status' => Message::FAILURE_STATUS,
+            'response' => 'failed'
+        ]);
+        $exception_message = $this->faker->sentence();
+
+        $this->mock(SmsGatewayInterface::class, function (MockInterface $mock) use ($message, $exception_message) {
+            $mock->shouldReceive('send')
+                ->once()
+                ->withArgs([$message->message, $message->phone_number])
+                ->andThrows(GatewayException::class, $exception_message, Response::HTTP_PRECONDITION_FAILED);
+        });
+
+        $response = $this->actingAs($user)->post(
+            route('messages.resend', $message->id)
+        );
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('messages.index'));
+
+        $this->assertDatabaseHas('messages', [
+            'id' => $message->id,
+            'message' => $message->message,
+            'phone_number' => $message->phone_number,
+            'status' => Message::FAILURE_STATUS,
+            'response' => $exception_message
+        ]);
+    }
 }

@@ -23,4 +23,21 @@ class MessageService
         ));
     }
 
+    /**
+     * @param Message $message
+     * 
+     * @return void
+     */
+    public function resend(Message $message): void
+    {
+        event(new ReSendMessageEvent($message));
+    }
+
+    /** 
+     * return LengthAwarePaginator
+     */
+    public function getPaginated(): LengthAwarePaginator
+    {
+        return Message::paginate();
+    }
 }
