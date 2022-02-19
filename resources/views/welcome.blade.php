@@ -65,7 +65,9 @@
         </div>
 
         <div class="links">
-            <span>Quickly get started : </span><a href="{{ route('docs') }}">Documentation</a>
+            <span>How can create sms ? : </span><a href="{{ route('docs') }}">Documentation</a>
+            <br>
+            <span>Wants a panel ? : </span><a href="{{ route('dashboard') }}">go to panel</a>
         </div>
 
     </div>
