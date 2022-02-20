@@ -2,6 +2,7 @@
 
 namespace App\Support\SmsGateway\Drivers;
 
+use \Illuminate\Support\Facades\Log;
 use App\Support\SmsGateway\ResponseData;
 use Symfony\Component\HttpFoundation\Response;
 use App\Support\SmsGateway\Exceptions\GatewayException;
@@ -31,6 +32,7 @@ class Ghasedak implements SmsGatewayInterface
      */
     public function send(string $message, string $recipient): self
     {
+        Log::debug("send message in ghasedak");
         // here we assume we called api and it was successful
         $result = $this->fakeResponse();
         
